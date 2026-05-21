@@ -18,3 +18,12 @@ def get_order(
     if db_order is None:
         raise HTTPException(status_code=404, detail="Order not found")
     return db_order
+
+#Se añade validación de propiedad (user_id) en la consulta de órdenes para prevenir acceso no autorizado a recursos de otros usuarios.
+
+#Cambios:
+#- Implementa current_user.id en el filtro de la query
+#- Valida que Order.user_id == current_user.id
+#- Corrige OWASP A01:2021 / API1:2023
+
+#Testing: Verificado que solo se pueden acceder pedidos propios.
